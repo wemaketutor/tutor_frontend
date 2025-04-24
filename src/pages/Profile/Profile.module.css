@@ -63,7 +63,7 @@
     background-color: #5a6268;
 }
 
-.logoutButton {
+.deleteButton {
     padding: 0.5rem 1rem;
     background-color: #d16860;
     color: white;
@@ -73,6 +73,24 @@
     font-size: 1rem;
 }
 
-.logoutButton:hover {
+.deleteButton:hover {
     background-color: #a74e48;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.button:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
 }
