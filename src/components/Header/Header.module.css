@@ -137,7 +137,13 @@
 
 .userIcon {
     width: 50px;
+    height: 50px;
+    border-radius: 50%; /* делаем круглую */
+    background-color: white; /* белая заливка */
+    padding: 4px; /* отступ, чтобы иконка не прилипала к краям */
+    box-sizing: border-box; /* чтобы padding не увеличивал размеры */
 }
+
 
 .profileButton {
     display: flex;
@@ -161,5 +167,13 @@
 }
 
 .textSecondary:hover {
+    color: #adb5bd;
+}
+
+.userInfoWrapper {
+    cursor: pointer;
+}
+
+.userInfoWrapper:hover .navLink {
     color: #adb5bd;
 }

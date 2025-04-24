@@ -15,26 +15,24 @@ const ProfileButton = () => {
 
     return (
         <div className={styles.profileButton}>
-            <div className={styles.userInfo}>
-                <p
-                    className={`${styles.navLink} ${getLinkClass()}`}
-                    onClick={() => navigate('/profile')}
-                >
-                    {user?.email || ''}
-                </p>
-                <p
-                    className={`${styles.navLink} ${getLinkClass()}`}
-                    onClick={() => navigate('/profile')}
-                >
-                    {translateRole(role) || ''}
-                </p>
+            <div
+                className={styles.userInfoWrapper}
+                onClick={() => navigate('/profile')}
+            >
+                <div className={styles.userInfo}>
+                    <p className={`${styles.navLink} ${getLinkClass()}`}>{user?.email || ''}</p>
+                    <p className={`${styles.navLink} ${getLinkClass()}`}>{translateRole(role) || ''}</p>
+                </div>
             </div>
-            <img className={styles.userIcon}
+            <img
+                className={styles.userIcon}
                 width="50px"
                 src="/src/assets/user-icon.svg"
                 alt="User Icon"
-                onClick={() => navigate('/profile')}></img>
+                onClick={() => navigate('/profile')}
+            />
         </div>
+
     );
 };
 
