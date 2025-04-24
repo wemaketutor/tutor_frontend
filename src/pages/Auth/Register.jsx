@@ -6,10 +6,9 @@ import styles from './Auth.module.css';
 
 const Register = () => {
     const [user, setUser] = useState({
-        username: '',
         email: '',
         password: '',
-        role: 'ROLE_STUDENT'
+        role: 'teacher'
     });
     const [message, setMessage] = useState('');
     const [successful, setSuccessful] = useState(false);
@@ -26,25 +25,25 @@ const Register = () => {
     const register = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/registration', user);
-            setMessage(response.data);
+            const response = await axios.post('/auth/register', user, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            setMessage({ message: `Пользователь ${response.data.text} зарегистрирован.` });
             setSuccessful(true);
-            navigate('/main');
+            navigate('/');
         } catch (error) {
-            setMessage(error.response.data);
+            if (error.response) {
+                setMessage(error.response.data);
+            } else {
+                setMessage({ message: 'Ошибка соединения с сервером' });
+            }
             setSuccessful(false);
         }
     };
 
     const fields = [
-        {
-            id: 'username',
-            name: 'username',
-            type: 'text',
-            label: 'Имя пользователя:',
-            value: user.username,
-            required: true
-        },
         {
             id: 'email',
             name: 'email',
@@ -69,8 +68,8 @@ const Register = () => {
             value: user.role,
             required: true,
             options: [
-                { value: 'ROLE_STUDENT', label: 'Ученик' },
-                { value: 'ROLE_TEACHER', label: 'Учитель' }
+                { value: 'student', label: 'Ученик' },
+                { value: 'teacher', label: 'Учитель' }
             ]
         }
     ];
@@ -86,7 +85,7 @@ const Register = () => {
             />
             {message && (
                 <div className={`${styles.alert} ${successful ? styles.alertSuccess : styles.alertDanger}`}>
-                    {message.message}
+                    {message.detail || message.message}
                 </div>
             )}
         </div>
