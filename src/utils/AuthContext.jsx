@@ -47,21 +47,22 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = useCallback(async () => {
-        // console.log('logout called');
         try {
-            // Сбрасываем состояние синхронно
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                await axios.post('/auth/logout', null, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+            }
             localStorage.removeItem('accessToken');
             setUser(null);
             setIsAuthenticated(false);
-            // Проверяем, что токен удалён
-            // console.log('Token removed, isAuthenticated:', isAuthenticated, 'user:', user);  
-            // Вызываем checkAuth для дополнительной синхронизации
             await checkAuth();
-            // console.log('logout completed');
         } catch (error) {
             console.error('Logout failed:', error);
         }
-    }, []);
+    }, [checkAuth]);
+    
 
     useEffect(() => {
         // console.log('Initial checkAuth on mount');
