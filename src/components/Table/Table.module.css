@@ -1,0 +1,50 @@
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.headerRow,
+.dataRow {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.headerCell,
+.dataCell {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.headerRow {
+    font-weight: 700;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dataRow {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dataRow:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .headerCell,
+    .dataCell {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .headerCell,
+    .dataCell {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

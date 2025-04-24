@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.header {
+    padding: 1rem;
+    background-color: #212529;
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+@media (min-width: 992px) {
+    .flexContainer {
+        justify-content: space-between;
+    }
+}
+
+.logoLink {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+@media (min-width: 992px) {
+    .logoLink {
+        margin-bottom: 0;
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoImg {
+    width: 50px;
+}
+
+.title {
+    font-size: 1.5rem;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 2rem;
+    justify-content: center;
+    flex: 1;
+}
+
+@media (min-width: 992px) {
+    .nav {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.navLink {
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
+
+.textWhite {
+    color: white;
+}
+
+.textWhite:hover {
+    color: #adb5bd;
+}
+
+.textSecondary {
+    color: #6c757d;
+}
+
+.textSecondary:hover {
+    color: #adb5bd;
+}
+
+.textEnd {
+    text-align: right;
+}
+
+.btnOutlineLight {
+    padding: 0.375rem 0.75rem;
+    margin-right: 0.5rem;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.btnOutlineLight:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btnSecondary {
+    padding: 0.375rem 0.75rem;
+    background-color: #6c757d;
+    border: none;
+    color: white;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.btnSecondary:hover {
+    background-color: #5a6268;
+}
+
+.profileLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.userIcon {
+    width: 50px;
+}
+
+.profileButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;       
+}
+
+.textWhite {
+    color: white;
+}
+
+.textWhite:hover {
+    color: #adb5bd;
+}
+
+.textSecondary {
+    color: #6c757d;
+}
+
+.textSecondary:hover {
+    color: #adb5bd;
+}

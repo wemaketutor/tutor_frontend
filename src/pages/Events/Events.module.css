@@ -1,0 +1,192 @@
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.emptyMessage {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #6c757d;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.headerRow,
+.dataRow {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.headerCell,
+.dataCell {
+    box-sizing: border-box;
+    padding: 0.5rem;
+}
+
+.headerRow {
+    font-weight: 700;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.headerCell:nth-child(1),
+.dataCell:nth-child(1) {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+}
+
+.headerCell:nth-child(2),
+.dataCell:nth-child(2) {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+}
+
+.headerCell:nth-child(3),
+.dataCell:nth-child(3) {
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+.headerCell:nth-child(4),
+.dataCell:nth-child(4) {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+}
+
+.headerCell:nth-child(5),
+.dataCell:nth-child(5) {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+}
+
+.headerCell:nth-child(6),
+.dataCell:nth-child(6) {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+}
+
+.headerCell:nth-child(7),
+.dataCell:nth-child(7) {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+}
+
+.dataRow {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.deleteLink {
+    color: #dc3545;
+    cursor: pointer;
+}
+
+.deleteLink:hover {
+    color: #bd2130;
+}
+
+.updateLink {
+    color: #28a745;
+    cursor: pointer;
+}
+
+.updateLink:hover {
+    color: #1e7e34;
+}
+
+.form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.formInput::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.submitButton {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .headerCell,
+    .dataCell {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .headerCell:nth-child(5),
+    .dataCell:nth-child(5),
+    .headerCell:nth-child(6),
+    .dataCell:nth-child(6),
+    .headerCell:nth-child(7),
+    .dataCell:nth-child(7) {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (max-width: 576px) {
+    .headerCell,
+    .dataCell {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
