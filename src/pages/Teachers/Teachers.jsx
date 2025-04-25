@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './Teachers.module.css';
 import Table from '../../components/Table/Table';
+import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 
 const Teachers = () => {
-    const [teachers, setTeachers] = useState([]);
+    const [teachers, setTeachers] = useState(null);
 
     const loadTeachers = async () => {
         try {
@@ -14,10 +15,9 @@ const Teachers = () => {
                 }
             });
             console.log('Teachers data:', response.data); // Для отладки
-            // Добавляем поле link для каждой записи
             const teachersWithLinks = response.data.map(teacher => ({
                 ...teacher,
-                link: `/teacher/${teacher.id}` // Предполагается, что id есть в данных
+                link: `/teacher/${teacher.id}`
             }));
             setTeachers(teachersWithLinks || []);
         } catch (error) {
@@ -25,25 +25,23 @@ const Teachers = () => {
             if (error.response?.status === 401) {
                 alert('Пожалуйста, войдите в систему');
             }
+            setTeachers([]);
         }
     };
 
-    useEffect(() => {
-        loadTeachers();
-    }, []);
-
     const columns = [
-        // { header: 'ID', accessor: item => item.id }, // Добавляем колонку для ID
         { header: 'Имя', accessor: item => item.firstName },
         { header: 'Фамилия', accessor: item => item.lastName },
         { header: 'Почта', accessor: item => item.email }
     ];
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Список учителей</h1>
-            <Table columns={columns} data={teachers} />
-        </div>
+        <LoadingWrapper onLoad={loadTeachers} shouldLoad={!teachers}>
+            <div className={styles.container}>
+                <h1 className={styles.title}>Список учителей</h1>
+                <Table columns={columns} data={teachers || []} />
+            </div>
+        </LoadingWrapper>
     );
 };
 
