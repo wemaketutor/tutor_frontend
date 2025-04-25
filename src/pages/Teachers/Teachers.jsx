@@ -8,14 +8,23 @@ const Teachers = () => {
 
     const loadTeachers = async () => {
         try {
-            const response = await axios.get('/teachers', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                // }
+            const response = await axios.get('http://localhost:3001/teachers', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
             });
-            setTeachers(response.data.teachers || []);
+            console.log('Teachers data:', response.data); // Для отладки
+            // Добавляем поле link для каждой записи
+            const teachersWithLinks = response.data.map(teacher => ({
+                ...teacher,
+                link: `/teacher/${teacher.id}` // Предполагается, что id есть в данных
+            }));
+            setTeachers(teachersWithLinks || []);
         } catch (error) {
             console.error('Failed to load teachers:', error.response ? error.response.data : error.message);
+            if (error.response?.status === 401) {
+                alert('Пожалуйста, войдите в систему');
+            }
         }
     };
 
@@ -24,10 +33,10 @@ const Teachers = () => {
     }, []);
 
     const columns = [
-        { header: 'Почта', accessor: item => item.user.email },
-        { header: 'Имя', accessor: item => item.user.firstName },
-        { header: 'Фамилия', accessor: item => item.user.lastName },
-        { header: 'Дополнительная информация', accessor: item => item.user.extraInfo }
+        // { header: 'ID', accessor: item => item.id }, // Добавляем колонку для ID
+        { header: 'Имя', accessor: item => item.firstName },
+        { header: 'Фамилия', accessor: item => item.lastName },
+        { header: 'Почта', accessor: item => item.email }
     ];
 
     return (

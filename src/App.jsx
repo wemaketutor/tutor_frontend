@@ -11,8 +11,8 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
 import QA from './pages/QA/QA';
-import Timetable from './pages/Timetable/Timetable';
-import { AuthProvider } from './utils/AuthContext.jsx'; // Импорт AuthProvider
+import Teacher from './pages/Teacher/Teacher';
+import { AuthProvider } from './utils/AuthContext.jsx';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
         <Route path="/resources" element={<Resources />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/qa" element={<QA />} />
-        <Route path="/timetable" element={<Timetable />} />
+        <Route path="/teacher/:id" element={<Teacher />} /> {/* Динамический маршрут */}
       </Routes>
       <Footer />
     </AuthProvider>

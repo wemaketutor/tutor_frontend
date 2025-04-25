@@ -1,7 +1,7 @@
 .tableContainer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    /* Убираем gap */
 }
 
 .headerRow,
@@ -13,9 +13,8 @@
 
 .headerCell,
 .dataCell {
-    flex: 0 0 25%;
-    max-width: 25%;
-    padding: 0.5rem;
+    flex: 1;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
@@ -26,11 +25,16 @@
 }
 
 .dataRow {
-    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dataRow:hover {
+    background-color: #e9ecef;
 }
 
 .dataRow:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #dee2e6;
 }
 
 @media (max-width: 768px) {
@@ -47,4 +51,8 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+}
+
+.clickableRow {
+    cursor: pointer;
 }

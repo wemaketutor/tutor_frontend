@@ -1,13 +1,32 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './Timetable.module.css';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styles from './Teacher.module.css';
+import axios from 'axios';
 
-const Timetable = () => {
-    const navigate = useNavigate();
+const Teacher = () => {
+    const { id } = useParams();
+    const [teacher, setTeacher] = useState(null);
 
-    const goPage = (name) => {
-        navigate(`/${name}`);
-    };
+    useEffect(() => {
+        const fetchTeacher = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/teachers/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                });
+                setTeacher(response.data);
+            } catch (error) {
+                console.error('Ошибка загрузки данных учителя:', error.response ? error.response.data : error.message);
+            }
+        };
+
+        fetchTeacher();
+    }, [id]);
+
+    if (!teacher) {
+        return <p className={styles.loading}>Загрузка...</p>;
+    }
 
     const times = [
         '8:00-9:30',
@@ -30,9 +49,9 @@ const Timetable = () => {
         'Воскресенье'
     ];
 
-    const schedule = times.map((time, index) => ({
+    const schedule = times.map((time) => ({
         time,
-        slots: days.map((day, dayIndex) => {
+        slots: days.map((day) => {
             if (day === 'Воскресенье') {
                 return { status: 'unavailable', text: 'Нет занятий' };
             }
@@ -51,13 +70,14 @@ const Timetable = () => {
                     <img
                         className={styles.profileImage}
                         src="https://www.meme-arsenal.com/memes/06ddb418ee477809334760a3c8d9a0e1.jpg"
-                        alt="Иванова Светлана Владимировна"
+                        alt={`${teacher.firstName} ${teacher.lastName}`}
                         width="300px"
                     />
                 </div>
                 <div className={styles.infoContainer}>
-                    <h2>Иванова Светлана Владимировна</h2>
-                    <p className={styles.secondaryText}>Стаж: 52 года</p>
+                    <h2>{teacher.firstName} {teacher.lastName}</h2>
+                    <p className={styles.secondaryText}>ID: {teacher.id}</p>
+                    <p className={styles.secondaryText}>Email: {teacher.email}</p>
                     <div className={styles.subjectsContainer}>
                         <p className={styles.secondaryText}>Предметы:</p>
                         <ul className={styles.subjectsList}>
@@ -68,21 +88,22 @@ const Timetable = () => {
                     </div>
                 </div>
             </section>
+
             <h2 className={styles.subtitle}>Свободные ячейки</h2>
             <section className={styles.tableSection}>
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th></th>
                             {days.map((day, index) => (
-                                <th key={index} scope="col">{day}</th>
+                                <th key={index}>{day}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {schedule.map((row, rowIndex) => (
                             <tr key={rowIndex}>
-                                <th className={styles.timeCell} scope="row">{row.time}</th>
+                                <th className={styles.timeCell}>{row.time}</th>
                                 {row.slots.map((slot, slotIndex) => (
                                     <td
                                         key={slotIndex}
@@ -108,4 +129,4 @@ const Timetable = () => {
     );
 };
 
-export default Timetable;
+export default Teacher;
