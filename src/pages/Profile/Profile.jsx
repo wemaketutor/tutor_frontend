@@ -160,7 +160,7 @@ const Profile = () => {
             onChange={handleInputChange}
           >
             <option value="student">Ученик</option>
-            <option value="teacher">Учитель</option>
+            <option value="teacher">Преподаватель</option>
           </select>
         </div>
         <button type="submit" className={styles.button} disabled={!isChanged}>

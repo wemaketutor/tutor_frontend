@@ -69,7 +69,7 @@ const Register = () => {
             required: true,
             options: [
                 { value: 'student', label: 'Ученик' },
-                { value: 'teacher', label: 'Учитель' }
+                { value: 'teacher', label: 'Преподаватель' }
             ]
         }
     ];

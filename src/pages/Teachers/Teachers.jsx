@@ -14,7 +14,7 @@ const Teachers = () => {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }
             });
-            console.log('Teachers data:', response.data); // Для отладки
+            // console.log('Teachers data:', response.data); // Для отладки
             const teachersWithLinks = response.data.map(teacher => ({
                 ...teacher,
                 link: `/teacher/${teacher.id}`
@@ -38,7 +38,7 @@ const Teachers = () => {
     return (
         <LoadingWrapper onLoad={loadTeachers} shouldLoad={!teachers}>
             <div className={styles.container}>
-                <h1 className={styles.title}>Список учителей</h1>
+                <h1 className={styles.title}>Список преподавателей</h1>
                 <Table columns={columns} data={teachers || []} />
             </div>
         </LoadingWrapper>

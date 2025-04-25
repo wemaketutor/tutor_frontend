@@ -1,7 +1,7 @@
 function translateRole(role) {
     switch (role) {
         case 'teacher':
-            return 'Учитель';
+            return 'Преподаватель';
         case 'student':
             return 'Ученик';
         case 'admin':
