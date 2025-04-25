@@ -38,18 +38,10 @@ const Footer = () => {
                         </li>
                         <li className={styles.navItem}>
                             <a
-                                onClick={() => navigate('timetable')}
+                                onClick={() => navigate('resources')}
                                 className={styles.navLink}
                             >
-                                Расписание
-                            </a>
-                        </li>
-                        <li className={styles.navItem}>
-                            <a
-                                onClick={() => navigate('profile')}
-                                className={styles.navLink}
-                            >
-                                Профиль
+                                Материалы
                             </a>
                         </li>
                     </ul>
