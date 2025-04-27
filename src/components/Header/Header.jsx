@@ -40,14 +40,14 @@ const Header = () => {
                                 <NavLink page="lessons">Уроки</NavLink>
                                 <NavLink page="homeworks">Задания</NavLink>
                                 <NavLink page="teachers">Преподаватели</NavLink>
-                                <NavLink page="resources">Материалы</NavLink>
+                                <NavLink page="materials">Материалы</NavLink>
                             </>
                         ) : isStudent ? (
                             <>
                                 <NavLink page="lessons">Уроки</NavLink>
                                 <NavLink page="homeworks">Задания</NavLink>
                                 <NavLink page="teachers">Преподаватели</NavLink>
-                                <NavLink page="resources">Материалы</NavLink>
+                                <NavLink page="materials">Материалы</NavLink>
                             </>
                         ) : <>
                         <NavLink page="about">Наша история</NavLink>

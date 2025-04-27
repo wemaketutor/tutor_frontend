@@ -9,7 +9,8 @@ import Lessons from './pages/Lessons/Lessons.jsx';
 import Lesson from './pages/Lesson/Lesson.jsx';
 import Homeworks from './pages/Homeworks/Homeworks.jsx';
 import Homework from './pages/Homework/Homework.jsx';
-import Resources from './pages/Resources/Resources';
+import Materials from './pages/Materials/Materials.jsx';
+import Material from './pages/Material/Material.jsx';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
@@ -31,7 +32,8 @@ function App() {
         <Route path="/teachers" element={<Teachers />} />
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/lesson/:lessonId" element={<Lesson />} />
-        <Route path="/resources" element={<Resources />} />
+        <Route path="/materials" element={<Materials />} />
+        <Route path="/material/:materialId" element={<Material />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/homeworks" element={<Homeworks />} />
         <Route path="/homework/:homeworkId" element={<Homework />} />
