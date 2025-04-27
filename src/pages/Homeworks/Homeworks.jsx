@@ -28,7 +28,7 @@ const Homeworks = () => {
                 params.studentId = userId;
             }
 
-            const response = await axios.get('http://localhost:3001/homeworks', {
+            const response = await axios.get('/homeworks', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
                 },

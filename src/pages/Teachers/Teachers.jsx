@@ -9,7 +9,7 @@ const Teachers = () => {
 
     const loadTeachers = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/teachers', {
+            const response = await axios.get('/teachers', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }

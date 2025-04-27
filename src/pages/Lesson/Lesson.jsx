@@ -16,7 +16,7 @@ const Lesson = () => {
 
     const loadLessons = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/lessons', {
+            const response = await axios.get('/lessons', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
@@ -53,7 +53,7 @@ const Lesson = () => {
         if (!window.confirm('Вы уверены, что хотите удалить этот урок?')) return;
 
         try {
-            await axios.delete(`http://localhost:3001/lessons/${lessonId}`, {
+            await axios.delete(`/lessons/${lessonId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }

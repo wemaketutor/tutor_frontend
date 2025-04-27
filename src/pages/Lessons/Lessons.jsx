@@ -14,7 +14,7 @@ const Lessons = () => {
 
     const loadLessons = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/lessons', {
+            const response = await axios.get('/lessons', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
