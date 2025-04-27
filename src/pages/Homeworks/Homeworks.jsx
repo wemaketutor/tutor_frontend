@@ -70,9 +70,9 @@ const Homeworks = () => {
                 {role === 'teacher' && (
                     <button
                         className={styles.button}
-                        onClick={() => navigate('/homeworks/create')}
+                        onClick={() => navigate('/homeworks/new')}
                     >
-                        Назначить задание
+                        Новое задание
                     </button>
                 )}
             </div>

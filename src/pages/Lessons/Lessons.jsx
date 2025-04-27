@@ -60,9 +60,9 @@ const Lessons = () => {
                 {role === 'teacher' && (
                     <button
                         className={styles.button}
-                        onClick={() => navigate('/events')}
+                        onClick={() => navigate('/lessons/new')}
                     >
-                        Перейти к мероприятиям
+                        Новый урок
                     </button>
                 )}
             </div>

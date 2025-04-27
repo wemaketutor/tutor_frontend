@@ -93,7 +93,7 @@ const Material = () => {
                             <p>
                                 <strong>Файл:</strong>{' '}
                                 <a
-                                    href={material.file_url}
+                                    href={material.fileUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={styles.link}
