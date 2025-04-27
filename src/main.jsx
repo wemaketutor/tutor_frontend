@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
+import axios from 'axios';
+
+axios.defaults.baseURL = import.meta.env.VITE_API_BACKEND_URL;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -11,7 +14,3 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>
 );
-
-import axios from 'axios'
-
-axios.defaults.baseURL = 'http://127.0.0.7:3001'//import.meta.env.VITE_API_BACKEND_URL;
