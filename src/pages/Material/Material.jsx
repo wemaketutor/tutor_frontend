@@ -72,7 +72,7 @@ const Material = () => {
                 }
             });
             alert('Материал удалён');
-            navigate('/resources');
+            navigate('/materials');
         } catch (error) {
             console.error('Ошибка при удалении:', error.response?.data || error.message);
             alert('Не удалось удалить материал.');

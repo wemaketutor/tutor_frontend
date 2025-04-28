@@ -29,7 +29,7 @@ const NewMaterial = () => {
       }
       if (!isTeacher) {
         alert('Только учителя могут создавать материалы');
-        navigate('/resources', { replace: true });
+        navigate('/materials', { replace: true });
         return;
       }
 
@@ -71,7 +71,7 @@ const NewMaterial = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Материал создан');
-      navigate('/resources', { replace: true });
+      navigate('/materials', { replace: true });
     } catch (error) {
       console.error('Ошибка при создании:', error.response?.data || error.message);
       alert('Не удалось создать материал');
