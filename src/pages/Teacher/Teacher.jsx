@@ -4,6 +4,7 @@ import styles from './Teacher.module.css';
 import axios from 'axios';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import TeacherLessonsTable from './TeacherLessonsTable';
+import TeacherLessonsCalendar from './TeacherLessonsCalendar';
 
 const Teacher = () => {
     const { id } = useParams();
@@ -62,7 +63,8 @@ const Teacher = () => {
                         </section>
 
                         <h2 className={styles.subtitle}>Расписание преподавателя</h2>
-                        <TeacherLessonsTable lessons={lessons} />
+                        {/* <TeacherLessonsTable lessons={lessons} /> */}
+                        <TeacherLessonsCalendar lessons={lessons} />
                     </>
                 )}
             </div>
