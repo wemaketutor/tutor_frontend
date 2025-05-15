@@ -4,12 +4,19 @@ import { AuthContext } from '../../utils/AuthContext.jsx';
 import axios from 'axios';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import styles from './Profile.module.css';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
-  const { user, logout, checkAuth } = useContext(AuthContext);
+  const { user, setUser, logout, checkAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState(user || null);
   const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setFormData(user);
+    }
+  }, [user]);  
 
   const loadProfile = async () => {
     try {
@@ -46,11 +53,12 @@ const Profile = () => {
       const response = await axios.put(`/profile/${formData.email}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert('Профиль обновлён');
+      toast.success('Профиль обновлён');
       setFormData(response.data);
+      setUser(response.data);
     } catch (error) {
       console.error('Ошибка при обновлении профиля:', error);
-      alert('Не удалось обновить профиль');
+      toast.error('Не удалось обновить профиль');
     }
   };
 
@@ -65,7 +73,7 @@ const Profile = () => {
       navigate('/home', { replace: true });
     } catch (error) {
       console.error('Ошибка при удалении аккаунта:', error);
-      alert('Не удалось удалить аккаунт');
+      toast.error('Не удалось удалить аккаунт');
     }
   };
 
