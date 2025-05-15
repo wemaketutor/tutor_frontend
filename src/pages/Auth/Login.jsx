@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import styles from './Auth.module.css';
 import { AuthContext } from '../../utils/AuthContext.jsx';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -28,10 +29,12 @@ const Login = () => {
             await login(user);
             setMessage({ message: 'Login successful' });
             setSuccessful(true);
+            toast.success('Вход выполнен успешно!')
             navigate('/');
         } catch (error) {
             if (error.response) {
                 setMessage(error.response.data);
+                toast.error('Не удалось войти!')
                 setSuccessful(false);
                 console.error('Login error:', error.response.data);
             } else {
