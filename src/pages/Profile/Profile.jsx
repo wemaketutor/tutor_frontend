@@ -58,7 +58,7 @@ const Profile = () => {
       setUser(response.data);
     } catch (error) {
       console.error('Ошибка при обновлении профиля:', error);
-      toast.error('Не удалось обновить профиль');
+      toast.error('Не удалось обновить профиль: '+error.response.data.detail);
     }
   };
 
