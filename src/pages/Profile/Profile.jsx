@@ -137,17 +137,6 @@ const Profile = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>Пароль:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className={styles.input}
-            value={formData?.password || ''}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={styles.formGroup}>
           <label htmlFor="phone" className={styles.label}>Телефон:</label>
           <input
             type="text"
