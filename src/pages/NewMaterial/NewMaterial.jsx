@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AuthContext } from '../../utils/AuthContext';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import styles from './NewMaterial.module.css';
+import { toast } from 'react-toastify';
 
 const NewMaterial = () => {
   const { user, checkAuth } = useContext(AuthContext);
@@ -70,11 +71,11 @@ const NewMaterial = () => {
       await axios.post('/materials', material, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert('Материал создан');
+      toast.success('Материал создан');
       navigate('/materials', { replace: true });
     } catch (error) {
       console.error('Ошибка при создании:', error.response?.data || error.message);
-      alert('Не удалось создать материал');
+      toast.error('Не удалось создать материал');
     }
   };
 

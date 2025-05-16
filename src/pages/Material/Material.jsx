@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from './Material.module.css';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import { AuthContext } from '../../utils/AuthContext';
+import { toast } from 'react-toastify';
 
 const Material = () => {
     const { materialId } = useParams();
@@ -71,11 +72,11 @@ const Material = () => {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }
             });
-            alert('Материал удалён');
+            toast.success('Материал удалён');
             navigate('/materials');
         } catch (error) {
             console.error('Ошибка при удалении:', error.response?.data || error.message);
-            alert('Не удалось удалить материал.');
+            toast.error('Не удалось удалить материал.');
         }
     };
 
