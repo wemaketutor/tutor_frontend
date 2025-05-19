@@ -64,12 +64,16 @@ const NewLesson = () => {
         alert('Заполните обязательные поля: название и дата');
         return;
       }
-
+      const dateWithOffset = lesson.date + ':00+03:00'
+      const durationDate = new Date(dateWithOffset);
+      const durationISO = lesson.duration 
+        ? lesson.duration 
+        : new Date(durationDate.getTime() + 60 * 60 * 1000).toISOString();
       const token = localStorage.getItem('accessToken');
       const payload = {
         name: lesson.name,
-        date: lesson.date,
-        duration: lesson.duration || new Date(new Date(lesson.date).getTime() + 60 * 60 * 1000).toISOString(),
+        date: dateWithOffset,
+        duration: durationISO + ':00+03:00',
         followedUserId: lesson.followedUserId ? parseInt(lesson.followedUserId) : undefined,
       };
 

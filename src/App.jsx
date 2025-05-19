@@ -20,6 +20,7 @@ import QA from './pages/QA/QA';
 import Teacher from './pages/Teacher/Teacher';
 import { AuthProvider } from './utils/AuthContext.jsx';
 import { ToastContainer } from 'react-toastify';
+import JoinTeacherPage from './pages/JoinTeacherPage';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/qa" element={<QA />} />
         <Route path="/teacher/:id" element={<Teacher />} />
+        <Route path="/join-teacher/:teacherId" element={<JoinTeacherPage />} />
       </Routes>
       <ToastContainer 
         position="bottom-right" 

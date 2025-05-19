@@ -29,12 +29,20 @@ const Login = () => {
             await login(user);
             setMessage({ message: 'Login successful' });
             setSuccessful(true);
-            toast.success('Вход выполнен успешно!')
-            navigate('/');
+            toast.success('Вход выполнен успешно!');
+
+            // Редирект после успешного логина
+            const redirectPath = localStorage.getItem('redirectAfterLogin');
+            if (redirectPath) {
+                localStorage.removeItem('redirectAfterLogin');
+                navigate(redirectPath);
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             if (error.response) {
                 setMessage(error.response.data);
-                toast.error('Не удалось войти!')
+                toast.error('Не удалось войти!');
                 setSuccessful(false);
                 console.error('Login error:', error.response.data);
             } else {
