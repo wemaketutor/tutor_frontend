@@ -1,69 +1,61 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './Homeworks.module.css'; // можно переименовать в Homeworks.module.css
+import styles from './Homeworks.module.css';
 import Table from '../../components/Table/Table';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import { AuthContext } from '../../utils/AuthContext';
 
 const Homeworks = () => {
-    const [homeworks, setHomeworks] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [homeworks, setHomeworks] = useState(null);
     const { user } = useContext(AuthContext);
     const role = user?.role;
     const userId = user?.id;
     const navigate = useNavigate();
 
-    useEffect(() => {
-        loadHomeworks();
-    }, []);
-
     const loadHomeworks = async () => {
-        setLoading(true);
         try {
             const params = {
                 page: 1,
                 per_page: 100,
                 sort_by: 'dueDate',
-                sort_order: 'desc',
+                sort_order: 'desc'
             };
-
+            
             if (role === 'teacher') {
                 params.teacherId = userId;
             } else {
                 params.studentId = userId;
             }
-
-            console.log('Загрузка домашних заданий с параметрами:', params);
+            
             const response = await axios.get('/homeworks', {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
                 params
             });
 
-            console.log('Полученные данные:', response.data);
+            // Пробуем все возможные пути получения данных
+            const responseData = response.data;
+            let homeworkList = [];
             
-            // Проверяем различные форматы данных
-            const homeworkList = response.data.students || response.data.homeworks || [];
-            console.log('Список домашних заданий:', homeworkList);
+            if (responseData.students && responseData.students.length > 0) {
+                homeworkList = responseData.students;
+            } else if (responseData.homeworks && responseData.homeworks.length > 0) {
+                homeworkList = responseData.homeworks;
+            } else if (Array.isArray(responseData)) {
+                homeworkList = responseData;
+            }
 
-            const homeworksWithLinks = homeworkList.map(hw => ({
-                ...hw,
-                link: `/homework/${hw.id}`
+            const homeworksWithLinks = homeworkList.map(homework => ({
+                ...homework,
+                link: `/homework/${homework.id}`
             }));
 
             setHomeworks(homeworksWithLinks);
-            console.log('Установлены домашние задания:', homeworksWithLinks);
         } catch (error) {
-            console.error('Ошибка при загрузке домашних заданий:', error);
-            console.error('Детали ошибки:', error.response ? error.response.data : error.message);
-            if (error.response?.status === 401) {
-                alert('Пожалуйста, войдите в систему');
-            }
+            console.error('Ошибка загрузки:', error.response ? error.response.data : error.message);
             setHomeworks([]);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -78,24 +70,20 @@ const Homeworks = () => {
     ];
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Мои домашние задания</h1>
-            {loading ? (
-                <div className={styles.loading}>Загрузка...</div>
-            ) : homeworks.length > 0 ? (
-                <Table columns={columns} data={homeworks} />
-            ) : (
-                <div className={styles.noData}>Домашние задания не найдены</div>
-            )}
-            {role === 'teacher' && (
-                <button
-                    className={styles.button}
-                    onClick={() => navigate('/homeworks/new')}
-                >
-                    Новое задание
-                </button>
-            )}
-        </div>
+        <LoadingWrapper onLoad={loadHomeworks} shouldLoad={!homeworks}>
+            <div className={styles.container}>
+                <h1 className={styles.title}>Мои домашние задания</h1>
+                <Table columns={columns} data={homeworks || []} />
+                {role === 'teacher' && (
+                    <button
+                        className={styles.button}
+                        onClick={() => navigate('/homeworks/new')}
+                    >
+                        Новое задание
+                    </button>
+                )}
+            </div>
+        </LoadingWrapper>
     );
 };
 
