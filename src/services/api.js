@@ -1,6 +1,5 @@
 import api from '../utils/axios';
 
-// Аутентификация
 export const authAPI = {
   login: (data) => api.post('/auth/login', data),
   register: (data) => api.post('/auth/register', data),
@@ -10,7 +9,6 @@ export const authAPI = {
   deleteProfile: (email) => api.delete(`/profile/${email}`),
 };
 
-// Уроки
 export const lessonsAPI = {
   getAll: (params) => api.get('/lessons', { params }),
   getById: (id) => api.get(`/lessons/${id}`),
@@ -29,7 +27,6 @@ export const lessonsAPI = {
     }),
 };
 
-// Материалы
 export const materialsAPI = {
   getAll: (params) => api.get('/materials', { params }),
   getById: (id) => api.get(`/material/${id}`),
@@ -38,9 +35,9 @@ export const materialsAPI = {
   delete: (id) => api.delete(`/materials/${id}`),
   getByTeacher: (teacherId, params) => api.get('/materials', { params: { ...params, teacherId } }),
   getPublic: (params) => api.get('/materials', { params: { ...params, isPublic: true } }),
+  downloadFile: (id) => api.get(`/materials/${id}/download`, { responseType: 'blob' }),
 };
 
-// Учителя
 export const teachersAPI = {
   getAll: () => api.get('/teachers'),
   getById: (id) => api.get(`/teachers/${id}`),
@@ -49,12 +46,10 @@ export const teachersAPI = {
   addStudent: (teacherId) => api.post(`/teachers/${teacherId}/add-student`),
 };
 
-// Студенты
 export const studentsAPI = {
   getTeachers: () => api.get('/student/teachers'),
 };
 
-// Домашние задания
 export const homeworksAPI = {
   getAll: (params) => api.get('/homeworks', { params }),
   getById: (id) => api.get(`/homeworks/${id}`),
@@ -72,7 +67,6 @@ export const homeworksAPI = {
     }),
 };
 
-// Комментарии
 export const commentsAPI = {
   getByHomework: (homeworkId) => api.get(`/homeworks/${homeworkId}/comments`),
   create: (data) => api.post('/comments', data),

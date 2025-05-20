@@ -1,44 +1,61 @@
 .container {
-    padding: 2rem;
-    max-width: 1140px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: white;
 }
 
 .title {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #343a40;
+}
+
+.detail {
+    margin-bottom: 2rem;
 }
 
 .detail p {
-    font-size: 1.1rem;
     margin: 0.5rem 0;
 }
 
 .detail strong {
-    color: #495057;
-}
-
-.deleteButton {
-    padding: 0.5rem 1rem;
-    background-color: #d16860;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.deleteButton:hover {
-    background-color: #a74e48;
-}
-
-.fadeIn {
-    animation: fadeIn 0.3s ease-in;
+    font-weight: bold;
 }
 
 .link {
     color: #007bff;
-    text-decoration: underline;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
     cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.link:disabled {
+    color: #6c757d;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #c82333;
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s ease-in;
 }

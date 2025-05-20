@@ -68,7 +68,13 @@ const NewMaterial = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('accessToken');
-      await axios.post('/materials', material, {
+      
+      const materialData = {
+        ...material,
+        fileUrl: material.fileUrl.trim() || '',
+      };
+      
+      await axios.post('/materials', materialData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Материал создан');
@@ -116,8 +122,11 @@ const NewMaterial = () => {
             value={material.fileUrl}
             className={styles.input}
             onChange={handleInputChange}
-            required
+            placeholder="Оставьте пустым для автоматической генерации PDF"
           />
+          <small className={styles.helpText}>
+            Если поле оставить пустым, система автоматически сгенерирует PDF-файл на основе названия и описания.
+          </small>
         </div>
 
         <div className={styles.formGroup}>

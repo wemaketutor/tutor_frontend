@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from './axios';
 
 export const AuthContext = createContext();
 
@@ -9,13 +9,9 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuth = useCallback(async () => {
         const token = localStorage.getItem('accessToken');
-        // console.log('checkAuth called, token:', token);
         if (token) {
             try {
-                const response = await axios.get('/profile', {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                // console.log('checkAuth success, user:', response.data.user);
+                const response = await api.get('/profile');
                 setUser(response.data.user);
                 setIsAuthenticated(true);
                 return true;
@@ -26,7 +22,6 @@ export const AuthProvider = ({ children }) => {
                 return false;
             }
         } else {
-            // console.log('No token, resetting auth state');
             setUser(null);
             setIsAuthenticated(false);
             return false;
@@ -35,9 +30,8 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const response = await axios.post('/auth/login', userData);
+            const response = await api.post('/auth/login', userData);
             localStorage.setItem('accessToken', response.data.accessToken);
-            // console.log('Login successful, updating auth state');
             await checkAuth();
             return response;
         } catch (error) {
@@ -50,27 +44,22 @@ export const AuthProvider = ({ children }) => {
         try {
             const token = localStorage.getItem('accessToken');
             if (token) {
-                await axios.post('/auth/logout', null, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                await api.post('/auth/logout');
             }
             localStorage.removeItem('accessToken');
             setUser(null);
             setIsAuthenticated(false);
-            await checkAuth();
         } catch (error) {
             console.error('Logout failed:', error);
         }
-    }, [checkAuth]);
-    
+    }, []);
 
     useEffect(() => {
-        // console.log('Initial checkAuth on mount');
         checkAuth();
     }, [checkAuth]);
 
     return (
-        <AuthContext.Provider value={{ user, setUser ,isAuthenticated, checkAuth, login, logout }}>
+        <AuthContext.Provider value={{ user, setUser, isAuthenticated, checkAuth, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

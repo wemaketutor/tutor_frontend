@@ -5,7 +5,8 @@ import './index.css';
 import App from './App.jsx';
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_BACKEND_URL;
+// Устанавливаем базовый URL для глобального экземпляра axios
+axios.defaults.baseURL = import.meta.env.VITE_API_BACKEND_URL || 'http://localhost:8081/api';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

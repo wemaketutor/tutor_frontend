@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import styles from './Material.module.css';
 import LoadingWrapper from '../../components/Loader/LoadingWrapper';
 import { AuthContext } from '../../utils/AuthContext';
 import { toast } from 'react-toastify';
+import { materialsAPI } from '../../services/api';
+import api from '../../utils/axios';
 
 const Material = () => {
     const { materialId } = useParams();
     const [materials, setMaterials] = useState(null);
     const [material, setMaterial] = useState(null);
+    const [isDownloading, setIsDownloading] = useState(false);
     const { user } = useContext(AuthContext);
     const isTeacher = user?.role === 'teacher';
     const navigate = useNavigate();
@@ -35,12 +37,7 @@ const Material = () => {
                 params.studentId = user.id;
             }
 
-            const response = await axios.get('/materials', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                },
-                params
-            });
+            const response = await api.get('/materials', { params });
 
             const materialList = response.data.materials || [];
             setMaterials(materialList);
@@ -67,16 +64,52 @@ const Material = () => {
         if (!window.confirm('Вы уверены, что хотите удалить этот материал?')) return;
 
         try {
-            await axios.delete(`/materials/${materialId}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
+            await api.delete(`/materials/${materialId}`);
             toast.success('Материал удалён');
             navigate('/materials');
         } catch (error) {
             console.error('Ошибка при удалении:', error.response?.data || error.message);
             toast.error('Не удалось удалить материал.');
+        }
+    };
+    
+    const downloadFile = async () => {
+        if (!material || !material.fileUrl) return;
+        
+        setIsDownloading(true);
+        try {
+            const response = await materialsAPI.downloadFile(material.id);
+            
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            
+            const fileName = `${material.title.replace(/[^a-zа-яё0-9]/gi, '_')}.pdf`;
+            link.setAttribute('download', fileName);
+            
+            document.body.appendChild(link);
+            link.click();
+            
+            link.remove();
+            window.URL.revokeObjectURL(url);
+            
+            toast.success('Файл успешно скачан');
+        } catch (error) {
+            console.error('Ошибка при скачивании файла:', error);
+            
+            if (error.response) {
+                if (error.response.status === 404) {
+                    toast.error('Файл не найден на сервере');
+                } else {
+                    toast.error(`Ошибка сервера: ${error.response.status}`);
+                }
+            } else if (error.request) {
+                toast.error('Сервер не отвечает. Проверьте подключение');
+            } else {
+                toast.error('Не удалось скачать файл');
+            }
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -93,14 +126,17 @@ const Material = () => {
                             <p><strong>Учащиеся:</strong> {material.studentIds?.length > 0 ? material.studentIds.join(', ') : 'Нет'}</p>
                             <p>
                                 <strong>Файл:</strong>{' '}
-                                <a
-                                    href={material.fileUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={styles.link}
-                                >
-                                    Скачать
-                                </a>
+                                {material.fileUrl ? (
+                                    <button
+                                        onClick={downloadFile}
+                                        className={styles.link}
+                                        disabled={isDownloading}
+                                    >
+                                        {isDownloading ? 'Скачивание...' : 'Скачать'}
+                                    </button>
+                                ) : (
+                                    <span>Файл не прикреплен</span>
+                                )}
                             </p>
                         </div>
 
