@@ -98,7 +98,7 @@ const Footer = () => {
                 </div>
 
             </div>
-            <p className={styles.copyright}>© <a className={styles.copyrightLink} href='https://tutoring-assistant.ru'>tutoring-assistant.ru</a> 2024</p>
+            <p className={styles.copyright}>© <a className={styles.copyrightLink} href='https://tutoring-assistant.ru'>tutoring-assistant.ru</a> 2025</p>
         </footer>
     );
 };
