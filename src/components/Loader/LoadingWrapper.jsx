@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Loader from './Loader';
 import styles from './LoadingWrapper.module.css';
 
@@ -14,6 +14,17 @@ const LoadingWrapper = ({
   const [shouldFadeIn, setShouldFadeIn] = useState(shouldLoad);
   const [error, setError] = useState(null);
   const [startTime, setStartTime] = useState(null);
+  const hasLoadedRef = useRef(false);
+  const isLoadingRef = useRef(false);
+  
+  // Сбрасываем состояние загрузки при изменении shouldLoad
+  useEffect(() => {
+    if (!shouldLoad && loading) {
+      setLoading(false);
+    } else if (shouldLoad && !loading && !hasLoadedRef.current) {
+      setLoading(true);
+    }
+  }, [shouldLoad]);
 
   useEffect(() => {
     if (isLoading !== undefined) {
@@ -22,13 +33,23 @@ const LoadingWrapper = ({
   }, [isLoading]);
 
   useEffect(() => {
+    let isMounted = true;
+    
     const performLoad = async () => {
-      if (onLoad && loading && shouldLoad) {
+      // Если уже загружается, не запускаем повторно
+      if (isLoadingRef.current) return;
+      
+      if (onLoad && loading && shouldLoad && !hasLoadedRef.current) {
+        isLoadingRef.current = true;
+        
         try {
           // Запоминаем время начала загрузки
           setStartTime(Date.now());
           
           await onLoad();
+          
+          // Если компонент размонтирован, не обновляем состояние
+          if (!isMounted) return;
           
           // Проверяем, прошло ли минимальное время с начала загрузки
           const loadTime = Date.now() - startTime;
@@ -39,19 +60,40 @@ const LoadingWrapper = ({
             await new Promise(resolve => setTimeout(resolve, minLoadTime - loadTime));
           }
           
+          // Помечаем, что загрузка выполнена
+          hasLoadedRef.current = true;
+          
           setTimeout(() => {
-            setLoading(false);
-            setShouldFadeIn(false);
+            if (isMounted) {
+              setLoading(false);
+              setShouldFadeIn(false);
+            }
           }, 500);
         } catch (error) {
-          setLoading(false);
-          setError(error);
-          console.error('Loading failed:', error);
+          if (isMounted) {
+            setLoading(false);
+            setError(error);
+            console.error('Loading failed:', error);
+          }
+        } finally {
+          isLoadingRef.current = false;
         }
       }
     };
+    
     performLoad();
-  }, [onLoad, loading, shouldLoad, startTime]);
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [onLoad, loading, shouldLoad]);
+
+  // Функция для принудительной перезагрузки данных
+  const retryLoading = () => {
+    hasLoadedRef.current = false;
+    setError(null);
+    setLoading(true);
+  };
 
   if (loading) {
     return <Loader text="Загрузка..." />;
@@ -65,10 +107,7 @@ const LoadingWrapper = ({
         <p className={styles.errorMessage}>{errorMessage}</p>
         <button
           className={styles.retryButton}
-          onClick={() => {
-            setError(null);
-            setLoading(true);
-          }}
+          onClick={retryLoading}
         >
           Попробовать снова
         </button>
