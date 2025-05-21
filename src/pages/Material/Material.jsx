@@ -80,7 +80,7 @@ const Material = () => {
         try {
             const response = await materialsAPI.downloadFile(material.id);
             
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
             const link = document.createElement('a');
             link.href = url;
             
@@ -100,6 +100,8 @@ const Material = () => {
             if (error.response) {
                 if (error.response.status === 404) {
                     toast.error('Файл не найден на сервере');
+                } else if (error.response.status === 415) {
+                    toast.error('Неподдерживаемый формат файла');
                 } else {
                     toast.error(`Ошибка сервера: ${error.response.status}`);
                 }
